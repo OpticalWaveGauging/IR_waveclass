@@ -70,19 +70,19 @@ The following has been tested with the following models: MobileNetV1, MobileNetV
 1. Run the feature extractor using the MobileNetV2 model, with augmented images, running ```extract_features_imaug.py``` and the configuration file ```conf/conf_mobilenet.json```:
 
 ```
-python extract_features_imaug.py -c conf_xception
+python extract_CNN_features_imaug.py -c conf_xception
 ```
 
 2. Run the feature extractor using the Xception model, without augmented images, running ```extract_features.py``` and the configuration file ```conf/conf_xception.json```:
 
 ```
-python extract_features.py -c conf_mobilenet
+python extract_CNN_features.py -c conf_mobilenet
 ```
 
 ### Train and save model
 
 ```
-python train_categorical.py -c conf_mobilenet
+python train_test_model.py -c conf_mobilenet
 ```
 
 

@@ -1,8 +1,8 @@
-# organize imports
-from __future__ import print_function
-
-#https://gogul09.github.io/software/flower-recognition-deep-learning
-#https://keras.io/applications/
+## train_test_model.py 
+## A script to carry out class activation mapping on some images of each class
+## Written by Daniel Buscombe,
+## Northern Arizona University
+## daniel.buscombe.nau.edu
 
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
@@ -84,54 +84,11 @@ if __name__ == '__main__':
 	#model = LogisticRegression(random_state=seed)
 	model = LogisticRegression(C=0.5, dual=True, random_state=seed)
 	model.fit(trainData, trainLabels)
-	
+
+	# use naive_bayes regression as the model	
 	#model = GaussianNB()
 	#model.fit(trainData, trainLabels)
 	
-	
-
-# from sklearn import (manifold, datasets, decomposition, ensemble,
-                     # discriminant_analysis, random_projection)
-
-
-# n_samples, n_features = trainData.shape
-# n_neighbors = 10
-
-# y = trainLabels.copy()
-
-# #----------------------------------------------------------------------
-# # Scale and visualize the embedding vectors
-# def plot_embedding(X, title=None):
-    # x_min, x_max = np.min(X, 0), np.max(X, 0)
-    # X = (X - x_min) / (x_max - x_min)
-
-    # #plt.figure()
-    # #ax = plt.subplot(111)
-    # col='rgb'
-    # for i in range(X.shape[0]):
-        # plt.text(X[i, 0], X[i, 1], str(y[i]),
-                 # color=col[int(y[i])],
-                 # fontdict={'weight': 'bold', 'size': 9})
-
-    # plt.xticks([]), plt.yticks([])
-    # if title is not None:
-        # plt.title(title, fontsize=6)
-
-# X_pca = decomposition.TruncatedSVD(n_components=2).fit_transform(trainData)
-# plot_embedding(X_pca,"Principal Components projection of the curves")
-	
-# X_iso = manifold.Isomap(n_neighbors, n_components=2).fit_transform(trainData)
-# plot_embedding(X_iso,"Isomap projection of the curves")	
-	
-# clf = manifold.LocallyLinearEmbedding(n_neighbors, n_components=2, method='ltsa')
-# X_ltsa = clf.fit_transform(trainData)
-# plot_embedding(X_ltsa,"Local Tangent Space Alignment of the curves")	
-	
-# tsne = manifold.TSNE(n_components=2, init='pca', random_state=0)
-# X_tsne = tsne.fit_transform(trainData)
-# plot_embedding(X_tsne, "t-SNE embedding of the curves")
-			   
-			   
 	# use rank-1 and rank-5 predictions
 	print ("[INFO] evaluating model...")
 	f = open(results, "w")
@@ -186,38 +143,9 @@ if __name__ == '__main__':
 
 	sns.heatmap(cm,
 				annot=True,
-				cmap = sns.cubehelix_palette(dark=0, light=1, as_cmap=True)) #cmap="cubehelix") #"Set2")
+				cmap = sns.cubehelix_palette(dark=0, light=1, as_cmap=True)) 
 				
 	tick_marks = np.arange(len(labels))+.5
 	plt.xticks(tick_marks, labels, rotation=45,fontsize=5)
 	plt.yticks(tick_marks, labels,rotation=45, fontsize=5)		
 	
-# F = []	
-# for k in np.where(trainLabels==0)[0]:	
-   # f = trainData[k].reshape(49,1280)	
-   # f = np.mean(f, axis=0) 	
-   # F.append(f[:1225].reshape(35,35)) 	
-	
-# plt.subplot(131)	
-# plt.imshow(np.mean(np.dstack(F), axis=2), cmap='gray')	
-	
-# F = []	
-# for k in np.where(trainLabels==1)[0]:	
-   # f = trainData[k].reshape(49,1280)	
-   # f = np.mean(f, axis=0) 	
-   # F.append(f[:1225].reshape(35,35)) 	
-	
-# plt.subplot(132)	
-# plt.imshow(np.mean(np.dstack(F), axis=2), cmap='gray')	
-		
-	
-# F = []	
-# for k in np.where(trainLabels==2)[0]:	
-   # f = trainData[k].reshape(49,1280)	
-   # f = np.mean(f, axis=0) 	
-   # F.append(f[:1225].reshape(35,35)) 	
-	
-# plt.subplot(133)	
-# plt.imshow(np.mean(np.dstack(F), axis=2), cmap='gray')	
-			
-# plt.show()

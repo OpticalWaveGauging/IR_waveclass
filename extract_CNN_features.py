@@ -1,5 +1,8 @@
-#https://gogul09.github.io/software/flower-recognition-deep-learning
-#https://keras.io/applications/
+## extract_CNN_features.py 
+## A script to carry out class activation mapping on some images of each class
+## Written by Daniel Buscombe,
+## Northern Arizona University
+## daniel.buscombe.nau.edu
 
 # filter warnings
 import warnings
