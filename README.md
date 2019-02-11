@@ -8,12 +8,12 @@ Software and data for training deep convolutional neural network models to class
 
 ### Folder structure
 
-* \conda_env contains yml files for setting up conda environments (one each for discrete classification and continuous regression)
-* \conf contains configuration files using for training models for discrete classification
-* \train contains files using for training models for discrete classification and continuous regression
-* \test contains files using for testing models for discrete classification and continuous regression
+* \conda_env contains yml files for setting up conda environment
+* \conf contains configuration files using for training models
+* \train contains files using for training models
+* \test contains files using for testing models
 * \out contains output files from model training
-* \keras_mods contains modified keras applications files for discrete classification and continuous regression
+* \keras_mods contains modified keras applications files
 
 ### Setting up computing environments
 
@@ -70,13 +70,13 @@ The following has been tested with the following models: MobileNetV1, MobileNetV
 1. Run the feature extractor using the MobileNetV2 model, with augmented images, running ```extract_features_imaug.py``` and the configuration file ```conf/conf_mobilenet.json```:
 
 ```
-python extract_CNN_features_imaug.py -c conf_xception
+python extract_CNN_features_imaug.py -c conf_mobilenet
 ```
 
 2. Run the feature extractor using the Xception model, without augmented images, running ```extract_features.py``` and the configuration file ```conf/conf_xception.json```:
 
 ```
-python extract_CNN_features.py -c conf_mobilenet
+python extract_CNN_features.py -c conf_xception
 ```
 
 ### Train and save model
