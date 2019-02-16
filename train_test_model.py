@@ -1,13 +1,13 @@
 ## train_test_model.py 
-## A script to carry out class activation mapping on some images of each class
+## A script to train logistic reg. models for multi-class predictions from CNN extracted features
 ## Written by Daniel Buscombe,
 ## Northern Arizona University
-## daniel.buscombe.nau.edu
+## daniel.buscombe@nau.edu
 
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-#from sklearn.naive_bayes import GaussianNB  ##DB
+#from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import confusion_matrix
 import numpy as np
 import h5py
@@ -63,34 +63,67 @@ if __name__ == '__main__':
 	h5f_label.close()
 
 	# verify the shape of features and labels
-	print ("[INFO] features shape: {}".format(features.shape))
-	print ("[INFO] labels shape: {}".format(labels.shape))
+	print ("features shape: {}".format(features.shape))
+	print ("labels shape: {}".format(labels.shape))
 
-	print ("[INFO] training started...")
+	print ("training started...")
 	# split the training and testing data
 	(trainData, testData, trainLabels, testLabels) = train_test_split(np.array(features),
 																	  np.array(labels),
 																	  test_size=test_size,
 																	  random_state=seed)
 
-	print ("[INFO] splitted train and test data...")
-	print ("[INFO] train data  : {}".format(trainData.shape))
-	print ("[INFO] test data   : {}".format(testData.shape))
-	print ("[INFO] train labels: {}".format(trainLabels.shape))
-	print ("[INFO] test labels : {}".format(testLabels.shape))
+	print ("splitted train and test data...")
+	print ("train data  : {}".format(trainData.shape))
+	print ("test data   : {}".format(testData.shape))
+	print ("train labels: {}".format(trainLabels.shape))
+	print ("test labels : {}".format(testLabels.shape))
 
 	# use logistic regression as the model
-	print ("[INFO] creating model...")
-	#model = LogisticRegression(random_state=seed)
+	print ("creating model...")
+	##model = LogisticRegression(random_state=seed)
 	model = LogisticRegression(C=0.5, dual=True, random_state=seed)
 	model.fit(trainData, trainLabels)
+	
+	# for k in range(36):
+		
+		# X = trainData[:, [k, k+1]]
+		# model = LogisticRegression(C=0.5, dual=True, random_state=seed)
 
-	# use naive_bayes regression as the model	
+		# model.fit(X, trainLabels)
+
+		# # Plot the decision boundary. For that, we will assign a color to each
+		# # point in the mesh [x_min, x_max]x[y_min, y_max].
+		# x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
+		# y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
+		# h = .02  # step size in the mesh
+		# xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+		# Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
+
+		# # Put the result into a color plot
+		# Z = Z.reshape(xx.shape)
+		# #plt.figure(1, figsize=(4, 3))
+		# plt.subplot(6,6,k+1)
+		# plt.pcolormesh(xx, yy, Z, cmap='bwr')
+
+		# # Plot also the training points
+		# #plt.scatter(X[:, 0], X[:, 1], s=6, c=trainLabels, edgecolors='None', cmap='bwr')
+		# #plt.xlabel('Feature '+str(k), fontsize=5)
+		# plt.ylabel('Feature '+str(k+1), fontsize=5)
+
+		# plt.xlim(xx.min(), xx.max())
+		# plt.ylim(yy.min(), yy.max())
+		# plt.xticks(())
+		# plt.yticks(())
+
+	# plt.show()	
+	
+	# use naive_bayes regression as the model instead of logistic regression 	
 	#model = GaussianNB()
 	#model.fit(trainData, trainLabels)
 	
 	# use rank-1 and rank-5 predictions
-	print ("[INFO] evaluating model...")
+	print ("evaluating model...")
 	f = open(results, "w")
 	rank_1 = 0
 	rank_5 = 0
@@ -126,15 +159,15 @@ if __name__ == '__main__':
 	f.close()
 
 	# dump classifier to file
-	print ("[INFO] saving model...")
+	print ("saving model...")
 	pickle.dump(model, open(classifier_path, 'wb'))
 
 	# display the confusion matrix
-	print ("[INFO] confusion matrix")
+	print ("confusion matrix")
 
 	# get the list of training lables
 	labels = sorted(list(os.listdir(train_path)))
-	labels =[t for t in labels if not t.endswith('csv')][1:]
+	##labels =[t for t in labels if not t.endswith('csv')]
 
 	# plot the confusion matrix
 	cm = confusion_matrix(testLabels, preds)

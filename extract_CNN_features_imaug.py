@@ -1,8 +1,8 @@
 ## extract_CNN_features_imaug.py 
-## A script to carry out class activation mapping on some images of each class
+## A script to extract image features using a deep CNN
 ## Written by Daniel Buscombe,
 ## Northern Arizona University
-## daniel.buscombe.nau.edu
+## daniel.buscombe@nau.edu
 
 # filter warnings
 import warnings
@@ -66,12 +66,10 @@ if __name__ == '__main__':
 	model_path    = config["model_path"]
 
 	# start time
-	print ("[STATUS] start time - {}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+	print ("start time - {}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
 	start = time.time()
 
 	# create the pretrained models
-	# check for pretrained weight usage or not
-	# check for top layers to be included or not
 	if model_name == "vgg16":
 	  base_model = VGG16(weights=weights)
 	  try:
@@ -91,7 +89,6 @@ if __name__ == '__main__':
 	  try:
 	      model = Model(base_model.input, base_model.get_layer('avg_pool').output)	  	  
 	  except:
-	      ##model = Model(input=base_model.input, output=base_model.get_layer('flatten').output)
 	      model = Model(input=base_model.input, output=base_model.get_layer('avg_pool').output)	  
 	  image_size = (224, 224)
 	elif model_name == "inceptionv3":
@@ -125,7 +122,7 @@ if __name__ == '__main__':
 	else:
 	  base_model = None
 
-	print ("[INFO] successfully loaded base model and model...")
+	print ("loaded base model and model...")
 
 	# path to training dataset
 	train_labels = os.listdir(train_path)
@@ -133,7 +130,7 @@ if __name__ == '__main__':
 	train_labels =[t for t in train_labels if not t.endswith('csv')]
 
 	# encode the labels
-	print ("[INFO] encoding labels...")
+	print ("encoding labels...")
 	le = LabelEncoder()
 	le.fit([tl for tl in train_labels])
 
@@ -165,17 +162,17 @@ if __name__ == '__main__':
 			flat = feature.flatten()
 			features.append(flat)
 			labels.append(label)
-			print ("[INFO] processed - " + str(count))
+			print ("processed - " + str(count))
 			count += 1
-		print ("[INFO] completed label - " + label)
+		print ("completed label - " + label)
 
 	# encode the labels using LabelEncoder
 	le = LabelEncoder()
 	le_labels = le.fit_transform(labels)
 
 	# get the shape of training labels
-	print ("[STATUS] training labels: {}".format(le_labels))
-	print ("[STATUS] training labels shape: {}".format(le_labels.shape))
+	print ("training labels: {}".format(le_labels))
+	print ("training labels shape: {}".format(le_labels.shape))
 	
 	try:
 		os.mkdir(os.getcwd()+os.sep+'out'+os.sep+model_name)
@@ -199,10 +196,10 @@ if __name__ == '__main__':
 
 	# save weights
 	model.save_weights(model_path + str(test_size) + ".h5")
-	print("[STATUS] saved model and weights to disk..")
+	print("saved model and weights to disk..")
 
-	print ("[STATUS] features and labels saved..")
+	print ("features and labels saved..")
 
 	# end time
 	end = time.time()
-	print ("[STATUS] end time - {}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+	print ("end time - {}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
