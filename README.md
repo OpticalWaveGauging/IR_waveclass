@@ -2,7 +2,9 @@
 ### About
 Code and data to implement Buscombe & Carini (2019) to classify wave breaking using deep neural networks
 
-> Buscombe and Carini (in review) A data-driven approach to classifying wave breaking in infrared imagery. Submitted to Coastal Engineering 
+> Buscombe and Carini (2019) A data-driven approach to classifying wave breaking in infrared imagery. Remote Sensing 11 (7), 859; https://doi.org/10.3390/rs11070859
+
+https://www.mdpi.com/2072-4292/11/7/859
 
 Software and data for training deep convolutional neural network models to classify wave breaker type from IR images of breaking waves in the surf zone
 
